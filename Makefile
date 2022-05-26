@@ -1,2 +1,2 @@
 a.out: main.c
-	gcc test.c -lGL -lGLU -lglut -lm
+	gcc main.c -lGL -lGLU -lglut -lm
