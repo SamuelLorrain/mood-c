@@ -10,6 +10,10 @@ extern int map[];
 void drawRays() {
     int r, mx,my,mp,dof;
     float rx,ry,ra,xo,yo,disT;
+
+    glColor3f(0,1,1); glBegin(GL_QUADS); glVertex2i(526,  0); glVertex2i(1006,  0); glVertex2i(1006,160); glVertex2i(526,160); glEnd();
+    glColor3f(0,0,1); glBegin(GL_QUADS); glVertex2i(526,160); glVertex2i(1006,160); glVertex2i(1006,320); glVertex2i(526,320); glEnd();
+
     ra=pa-DR*30; if(ra<0) { ra+=2*M_PI; } if (ra>2*M_PI) { ra-=2*M_PI; }
     for(r=0;r<60;r++) {
         //horizontal lines
@@ -52,7 +56,7 @@ void drawRays() {
 
         // 3D walls 320*160
         float ca = pa-ra; if (ca<0) { ca+=2*M_PI; } if (ca>2*M_PI) { ca-=2*M_PI; } disT=disT*cos(ca);
-        float lineH=(mapS*320)/disT;
+        float lineH=(mapS*320)/disT; if(lineH>320) { lineH=320; }
         float lineOff = 160 - (lineH/2);
         glLineWidth(8);
         glBegin(GL_LINES);
