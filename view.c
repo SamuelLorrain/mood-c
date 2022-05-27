@@ -3,6 +3,7 @@
 #include "mood_math.h"
 #include "view.h"
 #include "map.h"
+#include "texture/texture.h"
 
 extern float px,py,pa;
 extern int map[];
@@ -50,7 +51,8 @@ void drawRays() {
             } else { rx+=xo; ry+=yo; dof+=1; }
         }
 
-        if(disV<disH) { rx=vx; ry=vy; disT=disV; glColor3f(0.9,0,0); }
+        float shade=1;
+        if(disV<disH) { rx=vx; ry=vy; disT=disV; glColor3f(0.9,0,0); shade=0.5; }
         else if(disH<disV) { rx=hx; ry=hy; disT=disH; glColor3f(0.7,0,0); }
         glLineWidth(1); glBegin(GL_LINES); glVertex2i(px,py); glVertex2i(rx,ry); glEnd();
 
@@ -58,11 +60,18 @@ void drawRays() {
         float ca = pa-ra; if (ca<0) { ca+=2*M_PI; } if (ca>2*M_PI) { ca-=2*M_PI; } disT=disT*cos(ca);
         float lineH=(mapS*320)/disT; if(lineH>320) { lineH=320; }
         float lineOff = 160 - (lineH/2);
-        glLineWidth(8);
-        glBegin(GL_LINES);
-        glVertex2i(r*8+530,lineOff);
-        glVertex2i(r*8+530,lineH+lineOff);
-        glEnd();
+        float c=0, ty=0,ty_step=32.0/(float)lineH;
+        extern int allTextures[];
+
+        for(int y = 0; y < lineH; y++) {
+            c = allTextures[(int)ty*32]*shade;
+            glPointSize(8);
+            glColor3f(c,c,c);
+            glBegin(GL_POINTS);
+            glVertex2i(r*8+530,y+lineOff);
+            glEnd();
+            ty+=ty_step;
+        }
         ra+=DR;if(ra<0) { ra+=2*M_PI; } if (ra>2*M_PI) { ra-=2*M_PI; }
     }
 }

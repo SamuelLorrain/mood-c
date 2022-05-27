@@ -77,6 +77,7 @@ void ButtonUp(unsigned char key, int x, int y) {
     if (key == 'd') { Keys.d = 0; }
     if (key == 'z') { Keys.z = 0; }
     if (key == 's') { Keys.s = 0; }
+    if (key == 'i') { exit(0); }
     glutPostRedisplay();
 }
 
