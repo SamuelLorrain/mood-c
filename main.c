@@ -28,15 +28,21 @@ void drawPlayer() {
     glLineWidth(3);
     glBegin(GL_LINES);
     glVertex2i(px,py);
-    glVertex2i(px+pdx*5, py+pdy*5);
+    glVertex2i(px+pdx*20, py+pdy*20);
     glEnd();
 }
 
+float frame1, frame2,fps;
 void display() {
-    if (Keys.q == 1) { pa -=0.1; if(pa<0) { pa+=2*M_PI; } pdx=cos(pa)*5; pdy=sin(pa)*5; }
-    if (Keys.d == 1) { pa +=0.1; if(pa>2*M_PI) { pa-=2*M_PI; } pdx=cos(pa)*5; pdy=sin(pa)*5; }
-    if (Keys.z == 1) { px+=pdx; py+=pdy; }
-    if (Keys.s == 1) { px-=pdx; py-=pdy; }
+
+    frame2=glutGet(GLUT_ELAPSED_TIME);
+    fps=(frame2-frame1);
+    frame1=glutGet(GLUT_ELAPSED_TIME);
+
+    if (Keys.q == 1) { pa -=0.005*fps; if(pa<0) { pa+=2*M_PI; } pdx=cos(pa); pdy=sin(pa); }
+    if (Keys.d == 1) { pa +=0.005*fps; if(pa>2*M_PI) { pa-=2*M_PI; } pdx=cos(pa); pdy=sin(pa); }
+    if (Keys.z == 1) { px+=pdx*0.15*fps; py+=pdy*0.15*fps; }
+    if (Keys.s == 1) { px-=pdx*0.15*fps; py-=pdy*0.15*fps; }
     glutPostRedisplay();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

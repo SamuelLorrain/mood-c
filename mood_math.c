@@ -9,7 +9,7 @@ float fixAng(float a) {
     }
     return a;
 }
-float degToRad(int a) {
+float degToRad(float a) {
     return a*M_PI/180.0;
 }
 
